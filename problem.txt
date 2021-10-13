@@ -1,0 +1,30 @@
+Problem Statement
+    	
+Devu loves rabbits a lot. He recently bought some rabbits from his friend Amit. Amit has given each rabbit an integer ID. These are given to you in the int[] rabbitIds.
+
+Now, Devu knows that Amir is careless and sometimes assigns the same ID to multiple rabbits. To eliminate the possible confusion, Devu would like to make sure that no two rabbits have same ID.
+
+Determine whether Devu can change all IDs into mutually distinct integers if he can only increase or decrease the ID of each rabbit by at most one. Return "can" (quotes for clarity) if he can do that, or "cannot" if he cannot make all IDs distinct without changing some of them by more than one.
+
+ 
+Definition
+    	
+Class:	DevuAndRabbitNumbering
+Method:	canRenumber
+Parameters:	int[]
+Returns:	String
+Method signature:	String canRenumber(int[] rabbitIds)
+(be sure your method is public)
+    
+ 
+Notes
+-	The return value is case-sensitive.
+ 
+Constraints
+-	rabbitIds will contain between 1 and 50 elements, inclusive.
+-	Each element of rabbitIds will be between 1 and 1000, inclusive.
+
+sort 
+
+1 2 2 2 3 -> 0 1 2 3 4
+ 
