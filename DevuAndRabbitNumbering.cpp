@@ -4,26 +4,41 @@
 using namespace std;
 
 class DevuAndRabbitNumbering {
+
+	vector<int> count, movable;
+
+	bool check(int i, int d) {
+		while(i + d >= 0 && i + d < count.size()) {
+			if(count[i+d] == 0) return true;
+			if(movable[i+d] == 0) return false; // count[i+d] = 1
+			i += d;
+		}
+		return false;
+	}
+
+	void move(int i, int d) {
+		while(i + d >= 0 && i + d < count.size()) {
+			count[i] -= 1; movable[i] -= 1; 
+			count[i+d] += 1; if(count[i+d] == 1) return;
+			i += d;
+		}
+	}
+
 public:
-	string canRenumber(vector<int> &rabbitIds) {
-		vector<int> count(1002, 0), movable(1002, 0);
+	string canRenumber(vector<int> &rabbitIds) {	
+		count.resize(1002, 0); movable.resize(1002, 0);
 		for(int id : rabbitIds) { count[id] += 1; movable[id] += 1; }
 		
 		for(int i=1; i<=1000; i++) {
 			if(count[i] > 3) return "cannot";
-			
-			// check left 
-			if(count[i] > 1 && count[i-1] == 0) {
-				count[i-1] = 1;
-				count[i] -= 1;
-			}
-			
-			// check right  
-			if(count[i] > 1 && count[i+1] == 0) {
-				count[i+1] = 1;
-				count[i] -= 1;
-			}
-			
+
+			// 2 or 3
+			if(count[i] > 1 && check(i, -1)) 
+				move(i, -1);
+
+			if(count[i] > 1 && check(1, 1)) 
+				move(i, 1);
+
 			if(count[i] > 1) return "cannot";
 		}
 		
@@ -41,15 +56,13 @@ int main() {
 }
 
 /*
-check left 
-	0 fine 
-	1 not moved yet
+1 2 3 4
+1 2 2 4     (0, 0, 0) (1, 1, 1) (2, 2, 2) (3, 0, 0) (4, 1, 1)
+					  (1, 2, 1)	(2, 1, 1)
+			(0, 1, 0) (1, 1, 0)
 
-	if possible commit
-
-check right 
-	0 fine
-	1 not moved yet 
-
-	if possible commit 	
+1 2 2 2 3   (0, 0, 0) (1, 1, 1) (2, 3, 3) (3, 1, 1) (4, 0, 0)
+					  (1, 2, 1)	(2, 2, 2)
+					  			(2, 1, 1) (3, 2, 1)
+								  	      (3, 1, 0) (4, 1, 0)	
 */
